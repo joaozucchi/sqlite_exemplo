@@ -3,12 +3,16 @@ package br.ifsc.edu.sqlite_exemplo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,23 +38,22 @@ public class MainActivity extends AppCompatActivity {
 
         bd.insert("notas", null, contentValues);
 
-
         Cursor cursor= bd.rawQuery("SELECT * FROM notas",null,null);
         cursor.moveToFirst();
 
         String id;
         String titulo;
         String texto;
-        ArrayList<String> arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<>();
 
         while(!cursor.isAfterLast()){
 
-             //id = cursor.getString(cursor.getColumnIndex("id"));
+             id = cursor.getString(cursor.getColumnIndex("id"));
              titulo= cursor.getString(cursor.getColumnIndex("titulo"));
-             //texto = cursor.getString(cursor.getColumnIndex("texto"));
+             texto = cursor.getString(cursor.getColumnIndex("texto"));
 
             //Log.d("Tabela notas", id +" "+ titulo +" "+ texto);
-            arrayList.add(titulo);
+            arrayList.add(id+" "+titulo + " "+ texto);
             cursor.moveToNext();
         }
 
@@ -64,5 +67,14 @@ public class MainActivity extends AppCompatActivity {
         );
 
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                
+            }
+        });
     }
 }
