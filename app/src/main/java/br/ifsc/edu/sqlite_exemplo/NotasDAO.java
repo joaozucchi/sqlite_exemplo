@@ -9,13 +9,19 @@ import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
 public class NotasDAO {
+
     SQLiteDatabase bd;
 
     public NotasDAO(Context c) {
         bd = c.openOrCreateDatabase("meubd",c.MODE_PRIVATE,null);
+
+        bd.execSQL("CREATE TABLE IF NOT EXISTS notas (" +
+                "id integer primary key autoincrement," +
+                "titulo varchar not null," +
+                "texto varchar not null  )");
     }
 
-    public ArrayList<Nota>getNotas(){
+    public ArrayList<Nota> getNotas(){
         ArrayList<Nota> arrayListResult = new ArrayList<Nota>();
 
         Cursor cursor= bd.rawQuery("SELECT * FROM notas",null,null);
@@ -37,5 +43,4 @@ public class NotasDAO {
 
         return arrayListResult;
     }
-
 }
