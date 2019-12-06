@@ -48,12 +48,12 @@ public class NotasDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("titulo",titulo);
         contentValues.put("texto",nota);
-
         bd.insert("notas", null, contentValues);
     }
 
     public String getNota(int id) {
         Cursor cursor = bd.rawQuery("SELECT * FROM notas WHERE id = "+id, null, null);
+        cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("texto"));
     }
 
