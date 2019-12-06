@@ -50,6 +50,14 @@ public class NotasDAO {
         contentValues.put("texto",nota);
 
         bd.insert("notas", null, contentValues);
+    }
 
+    public String getNota(int id) {
+        Cursor cursor = bd.rawQuery("SELECT * FROM notas WHERE id = "+id, null, null);
+        return cursor.getString(cursor.getColumnIndex("texto"));
+    }
+
+    public void dropDatabase(){
+        bd.execSQL("DROP TABLE notas");
     }
 }

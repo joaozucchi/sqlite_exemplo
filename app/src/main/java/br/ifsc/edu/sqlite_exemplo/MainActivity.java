@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    NotasController notasController = new NotasController(getApplicationContext());
+    NotasController notasController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         //associação listView
         listView = findViewById(R.id.listView);
+
+        notasController = new NotasController(getApplicationContext());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getApplicationContext(),
@@ -40,25 +42,21 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+                intent.putExtra("id", i);
                 startActivity(intent);
             }
         });
     }
 
     public void openNotaActivity(View view) {
-        setContentView(R.layout.activity_add);
+        Intent intent = new Intent(MainActivity.this, AddActivity.class);
+        startActivity(intent);
     }
 
-    public void addNota(View view) {
-        EditText tituloText = findViewById(R.id.titulo);
-        EditText notaText = findViewById(R.id.nota);
-
-        String titulo = tituloText.getText().toString();
-        String nota = notaText.getText().toString();
-        notasController.addNota(
-                titulo,
-                nota
-        );
+    public void dropNota(View view) {
+        notasController.dropNotas();
+        finish();
+        startActivity(getIntent());
     }
 }

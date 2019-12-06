@@ -23,11 +23,18 @@ public class NotasController {
         for (Nota n : notasDAO.getNotas() ){
             arrayListResult.add(n.getTitulo());
         }
-
         return arrayListResult;
     }
 
     public void addNota(String titulo, String nota) {
         notasDAO.addNota(titulo, nota);
+    }
+
+    public String getNota(int id) {
+        return notasDAO.getNota(id);
+    }
+
+    public void dropNotas() {
+        notasDAO.dropDatabase();
     }
 }
