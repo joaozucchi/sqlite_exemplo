@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,13 +19,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
+    NotasController notasController = new NotasController(getApplicationContext());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NotasController notasController = new NotasController(getApplicationContext());
-
+        //associação listView
         listView = findViewById(R.id.listView);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -43,5 +44,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void openNotaActivity(View view) {
+        setContentView(R.layout.activity_add);
+    }
+
+    public void addNota(View view) {
+        EditText tituloText = findViewById(R.id.titulo);
+        EditText notaText = findViewById(R.id.nota);
+
+        String titulo = tituloText.getText().toString();
+        String nota = notaText.getText().toString();
+        notasController.addNota(
+                titulo,
+                nota
+        );
     }
 }

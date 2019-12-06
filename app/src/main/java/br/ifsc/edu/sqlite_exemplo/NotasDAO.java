@@ -1,5 +1,6 @@
 package br.ifsc.edu.sqlite_exemplo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,7 +41,15 @@ public class NotasDAO {
             arrayListResult.add(new Nota(id, titulo, texto));
             cursor.moveToNext();
         }
-
         return arrayListResult;
+    }
+
+    public void addNota(String titulo, String nota) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("titulo",titulo);
+        contentValues.put("texto",nota);
+
+        bd.insert("notas", null, contentValues);
+
     }
 }

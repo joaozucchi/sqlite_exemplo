@@ -26,4 +26,8 @@ public class NotasController {
 
         return arrayListResult;
     }
+
+    public void addNota(String titulo, String nota) {
+        notasDAO.addNota(titulo, nota);
+    }
 }
